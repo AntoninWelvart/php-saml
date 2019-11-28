@@ -521,6 +521,7 @@ class OneLogin_Saml2_Auth
         $security = $this->_settings->getSecurityData();
         /** Allow assertion to have embedded signature, depending on IDP settings */
         if (isset($security['authnRequestsEmbeddedSigned']) && $security['authnRequestsEmbeddedSigned']) {
+            \Log::info('Auth.login - security with authnRequestsEmbeddedSigned activated');
             $key = $this->_settings->getSPkey();
             $cert = $this->_settings->getSPcert();
 
@@ -529,18 +530,23 @@ class OneLogin_Saml2_Auth
 
             $authNRequestXML = $authnRequest->getXML();
             $signedAuthNRequestXML = OneLogin_Saml2_Utils::addSign($authNRequestXML, $key, $cert, $signatureAlgorithm, $digestAlgorithm);
-            $encodedAuthNRequest = base64_encode($signedAuthNRequestXML);
+            $encodedAuthNRequest = base64_encode(gzdeflate($signedAuthNRequestXML));
             
+            \Log::info('Auth.login - signedAuthNRequestXML : '.$signedAuthNRequestXML);
+            \Log::info('Auth.login - encodedAuthNRequest : '.$encodedAuthNRequest);
+
             $samlRequest = $encodedAuthNRequest;
             $parameters['SAMLRequest'] = $samlRequest;
         }
 
         if (isset($security['authnRequestsSigned']) && $security['authnRequestsSigned']) {
+            \Log::info('Auth.login - security with authnRequestsSigned activated');
             $signature = $this->buildRequestSignature($samlRequest, $parameters['RelayState'], $security['signatureAlgorithm']);
             $parameters['SigAlg'] = $security['signatureAlgorithm'];
             $parameters['Signature'] = $signature;
         }
 
+        \Log::info('Auth.login - redirecting to with samlRequest : '.$samlRequest);
         return $this->redirectTo($this->getSSOurl(), $parameters, $stay);
     }
 
