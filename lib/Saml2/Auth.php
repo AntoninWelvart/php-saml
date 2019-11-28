@@ -544,6 +544,8 @@ class OneLogin_Saml2_Auth
             $signature = $this->buildRequestSignature($samlRequest, $parameters['RelayState'], $security['signatureAlgorithm']);
             $parameters['SigAlg'] = $security['signatureAlgorithm'];
             $parameters['Signature'] = $signature;
+            \Log::info('Auth.login - Query signature : '.$signature);
+            \Log::info('Auth.login - Query SigAlg : '.$parameters['SigAlg']);
         }
 
         \Log::info('Auth.login - redirecting to with samlRequest : '.$samlRequest);
