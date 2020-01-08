@@ -519,7 +519,7 @@ class OneLogin_Saml2_Auth
         }
 
         $security = $this->_settings->getSecurityData();
-        /** Allow assertion to have embedded signature, depending on IDP settings */
+        /** Allow authNRequest to have embedded signature, depending on advanced security settings */
         if (isset($security['authnRequestsEmbeddedSigned']) && $security['authnRequestsEmbeddedSigned']) {
             \Log::info('Auth.login - security with authnRequestsEmbeddedSigned activated');
             $key = $this->_settings->getSPkey();
