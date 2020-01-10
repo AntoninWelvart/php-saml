@@ -548,6 +548,7 @@ class OneLogin_Saml2_Auth
             \Log::info('Auth.login - Query SigAlg : '.$parameters['SigAlg']);
         }
 
+        \Log::info('Auth.login - redirecting to : '.$this->getSSOurl());
         \Log::info('Auth.login - redirecting to with samlRequest : '.$samlRequest);
         return $this->redirectTo($this->getSSOurl(), $parameters, $stay);
     }
