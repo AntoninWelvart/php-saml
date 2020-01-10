@@ -1403,6 +1403,8 @@ class OneLogin_Saml2_Utils
      */
     public static function validateSign($xml, $cert = null, $fingerprint = null, $fingerprintalg = 'sha1', $xpath = null, $multiCerts = null)
     {
+        \Log::info('Util.validateSign - XML to validate :');
+        \Log::info($xml);
         if ($xml instanceof DOMDocument) {
             $dom = clone $xml;
         } else if ($xml instanceof DOMElement) {
