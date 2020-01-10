@@ -1405,6 +1405,16 @@ class OneLogin_Saml2_Utils
     {
         \Log::info('Util.validateSign - XML to validate :');
         \Log::info($xml);
+        \Log::info('Util.validateSign - cert :');
+        \Log::info($cert);
+        \Log::info('Util.validateSign - fingerprint :');
+        \Log::info($fingerprint);
+        \Log::info('Util.validateSign - fingerprintalg :');
+        \Log::info($fingerprintalg);
+        \Log::info('Util.validateSign - xpath :');
+        \Log::info($xpath);
+        \Log::info('Util.validateSign - multiCerts :');
+        \Log::info($multiCerts);
         if ($xml instanceof DOMDocument) {
             $dom = clone $xml;
         } else if ($xml instanceof DOMElement) {
