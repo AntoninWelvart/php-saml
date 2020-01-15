@@ -1403,18 +1403,21 @@ class OneLogin_Saml2_Utils
      */
     public static function validateSign($xml, $cert = null, $fingerprint = null, $fingerprintalg = 'sha1', $xpath = null, $multiCerts = null)
     {
-        \Log::info('Util.validateSign - XML to validate :');
-        \Log::info($xml);
-        \Log::info('Util.validateSign - cert :');
-        \Log::info($cert);
-        \Log::info('Util.validateSign - fingerprint :');
-        \Log::info($fingerprint);
-        \Log::info('Util.validateSign - fingerprintalg :');
-        \Log::info($fingerprintalg);
-        \Log::info('Util.validateSign - xpath :');
-        \Log::info($xpath);
-        \Log::info('Util.validateSign - multiCerts :');
-        \Log::info($multiCerts);
+        \Log::info('Util.validateSign');
+        try {
+            \Log::info('Util.validateSign - cert :');
+            \Log::info($cert);
+            \Log::info('Util.validateSign - fingerprint :');
+            \Log::info($fingerprint);
+            \Log::info('Util.validateSign - fingerprintalg :');
+            \Log::info($fingerprintalg);
+            \Log::info('Util.validateSign - xpath :');
+            \Log::info($xpath);
+            \Log::info('Util.validateSign - multiCerts :');
+            \Log::info($multiCerts);
+        } catch($e) {
+            \Log::info("Util.validateSign - Could not display validateSign parameters !");
+        }
         if ($xml instanceof DOMDocument) {
             $dom = clone $xml;
         } else if ($xml instanceof DOMElement) {
@@ -1423,6 +1426,13 @@ class OneLogin_Saml2_Utils
             $dom = new DOMDocument();
             $dom = self::loadXML($dom, $xml);
         }
+        try {
+            \Log::info('Util.validateSign - XML to validate (dom) :');
+            \Log::info($dom->saveXML());
+        } catch($e) {
+            \Log::info("Util.validateSign - Could not display XML/DOM Document !");
+        }
+        
 
         $objXMLSecDSig = new XMLSecurityDSig();
         $objXMLSecDSig->idKeys = array('ID');
