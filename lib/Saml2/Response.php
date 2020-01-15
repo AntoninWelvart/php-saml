@@ -395,6 +395,9 @@ class OneLogin_Saml2_Response
                 }
 
                 # If find a Signature on the Response, validates it checking the original response
+                \Log::info('Response.isValid - validates signature in response - isset : '.isset($hasSignedResponse));
+                if ( ! isset($hasSignedResponse)) 
+                    $hasSignedResponse = false;
                 \Log::info('Response.isValid - validates signature in response : '.$hasSignedResponse);
                 if ($hasSignedResponse && !OneLogin_Saml2_Utils::validateSign($this->document, $cert, $fingerprint, $fingerprintalg, OneLogin_Saml2_Utils::RESPONSE_SIGNATURE_XPATH, $multiCerts)) {
                     throw new OneLogin_Saml2_ValidationError(
@@ -405,6 +408,9 @@ class OneLogin_Saml2_Response
 
                 # If find a Signature on the Assertion (decrypted assertion if was encrypted)
                 $documentToCheckAssertion = $this->encrypted ? $this->decryptedDocument : $this->document;
+                \Log::info('Response.isValid - validates signature in assertion - isset: '.$hasSignedAssertion);
+                if ( ! isset($hasSignedAssertion)) 
+                    $hasSignedAssertion = false;
                 \Log::info('Response.isValid - validates signature in assertion : '.$hasSignedAssertion);
                 if ($hasSignedAssertion && !OneLogin_Saml2_Utils::validateSign($documentToCheckAssertion, $cert, $fingerprint, $fingerprintalg, OneLogin_Saml2_Utils::ASSERTION_SIGNATURE_XPATH, $multiCerts)) {
                     throw new OneLogin_Saml2_ValidationError(
