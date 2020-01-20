@@ -1415,7 +1415,7 @@ class OneLogin_Saml2_Utils
             \Log::info($xpath);
             \Log::info('Util.validateSign - multiCerts :');
             \Log::info($multiCerts);
-        } catch($e) {
+        } catch(Exception $e) {
             \Log::info("Util.validateSign - Could not display validateSign parameters !");
         }
         if ($xml instanceof DOMDocument) {
@@ -1429,7 +1429,7 @@ class OneLogin_Saml2_Utils
         try {
             \Log::info('Util.validateSign - XML to validate (dom) :');
             \Log::info($dom->saveXML());
-        } catch($e) {
+        } catch(Exception $e) {
             \Log::info("Util.validateSign - Could not display XML/DOM Document !");
         }
         
